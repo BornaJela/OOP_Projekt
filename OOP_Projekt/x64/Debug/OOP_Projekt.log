@@ -1,2 +1,48 @@
-﻿  main.cpp
-  OOP_Projekt.vcxproj -> C:\Users\borna\source\repos\OOP_Projekt\x64\Debug\OOP_Projekt.exe
+﻿  Game.cpp
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(11,13): error C2512: 'sf::Event': no appropriate default constructor available
+      C:\Users\borna\source\repos\SFML-3.0.2\include\SFML\Window\Event.hpp(47,7):
+      see declaration of 'sf::Event'
+  
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(13,14): error C2660: 'sf::WindowBase::pollEvent': function does not take 1 arguments
+      C:\Users\borna\source\repos\SFML-3.0.2\include\SFML\Window\WindowBase.hpp(226,40):
+      see declaration of 'sf::WindowBase::pollEvent'
+      C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(13,14):
+      while trying to match the argument list '(sf::Event)'
+  
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(15,14): error C2039: 'type': is not a member of 'sf::Event'
+      C:\Users\borna\source\repos\SFML-3.0.2\include\SFML\Window\Event.hpp(47,7):
+      see declaration of 'sf::Event'
+  
+  main.cpp
+C:\Users\borna\source\repos\OOP_Projekt\Globals.h(4,27): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
+  (compiling source file 'main.cpp')
+  
+C:\Users\borna\source\repos\OOP_Projekt\main.cpp(8,28): error C2665: 'sf::VideoMode::VideoMode': no overloaded function could convert all the argument types
+      C:\Users\borna\source\repos\SFML-3.0.2\include\SFML\Window\VideoMode.hpp(61,5):
+      could be 'sf::VideoMode::VideoMode(sf::Vector2u,unsigned int)'
+          C:\Users\borna\source\repos\OOP_Projekt\main.cpp(8,28):
+          'sf::VideoMode::VideoMode(sf::Vector2u,unsigned int)': cannot convert argument 1 from 'const int' to 'sf::Vector2u'
+              C:\Users\borna\source\repos\OOP_Projekt\main.cpp(8,29):
+              'sf::Vector2<unsigned int>::Vector2': no overloaded function could convert all the argument types
+                  C:\Users\borna\source\repos\SFML-3.0.2\include\SFML\System\Vector2.hpp(205,1):
+                  could be 'sf::Vector2<unsigned int>::Vector2(sf::Vector2<unsigned int> &&)'
+                      C:\Users\borna\source\repos\OOP_Projekt\main.cpp(8,29):
+                      'sf::Vector2<unsigned int>::Vector2(sf::Vector2<unsigned int> &&)': cannot convert argument 1 from 'const int' to 'sf::Vector2<unsigned int> &&'
+                          C:\Users\borna\source\repos\OOP_Projekt\main.cpp(8,29):
+                          Reason: cannot convert from 'const int' to 'sf::Vector2<unsigned int>'
+                          C:\Users\borna\source\repos\OOP_Projekt\main.cpp(8,29):
+                          Conversion requires a second user-defined-conversion operator or constructor
+                  C:\Users\borna\source\repos\SFML-3.0.2\include\SFML\System\Vector2.hpp(205,1):
+                  or       'sf::Vector2<unsigned int>::Vector2(const sf::Vector2<unsigned int> &)'
+                      C:\Users\borna\source\repos\OOP_Projekt\main.cpp(8,29):
+                      'sf::Vector2<unsigned int>::Vector2(const sf::Vector2<unsigned int> &)': cannot convert argument 1 from 'const int' to 'const sf::Vector2<unsigned int> &'
+                          C:\Users\borna\source\repos\OOP_Projekt\main.cpp(8,29):
+                          Reason: cannot convert from 'const int' to 'const sf::Vector2<unsigned int>'
+                          C:\Users\borna\source\repos\OOP_Projekt\main.cpp(8,29):
+                          Conversion requires a second user-defined-conversion operator or constructor
+                  C:\Users\borna\source\repos\OOP_Projekt\main.cpp(8,29):
+                  while trying to match the argument list '(const int)'
+      C:\Users\borna\source\repos\OOP_Projekt\main.cpp(8,28):
+      while trying to match the argument list '(const int, const int)'
+  
+  Generating Code...

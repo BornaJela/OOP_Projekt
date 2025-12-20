@@ -1,21 +1,13 @@
 ﻿
 #include <SFML/Graphics.hpp>
+#include "Globals.h"
+#include "Game.h"
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode({ 200, 200 }), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    //visina i sirina i ime igre
+    sf::VideoMode videomode(WIN_WIDTH, WIN_HEIGHT);
+    sf::RenderWindow win(videomode,"Flappy Bird");
+    Game game(win);
+    game.start_game();
 
-    while (window.isOpen())
-    {
-        while (const std::optional event = window.pollEvent())
-        {
-            if (event->is<sf::Event::Closed>())
-                window.close();
-        }
-
-        window.clear();
-        window.draw(shape);
-        window.display();
-    }
 }
