@@ -14,6 +14,7 @@ Game::Game(sf::RenderWindow& window) : win(window){
 	ground_sprite_first.setTexture(ground_texture);
 	ground_sprite_second.setTexture(ground_texture);
 	ground_sprite_first.setScale(SCALE_FACTOR, SCALE_FACTOR);
+	ground_sprite_second.setScale(SCALE_FACTOR, SCALE_FACTOR);
 
 	//pozicija dobivena kao  -> visina ekrana - (visina poda * scale factor)
 	ground_sprite_first.setPosition(0, 600.5);
@@ -35,6 +36,8 @@ void Game::start_game() {
 				win.close();
 			}
 		}
+		std::cout << "Ground 1 height: " << ground_sprite_first.getGlobalBounds().height << std::endl;
+		std::cout << "Ground 1 top: " << ground_sprite_first.getGlobalBounds().top << std::endl;
 		move_ground(delta_time);
 		draw_background();
 		//zaslon
