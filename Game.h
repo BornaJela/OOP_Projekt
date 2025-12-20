@@ -10,6 +10,14 @@ public:
 	sf::RenderWindow& win;
 	//funkcija za pokretanje igre
 	void start_game();
+private:
+	//klasa texture za pozadinsku sliku
+	sf::Texture background_texture, ground_texture;
+	sf::Sprite background_sprite, ground_sprite_first, ground_sprite_second;
+	sf::Clock clock;
+	int move_speed = 200;
+	void draw_background();
+	void move_ground(sf::Time& delta_time);
 
 };
 
