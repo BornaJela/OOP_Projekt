@@ -20,7 +20,6 @@ void Bird::reset_position() {
 	velocity_y = 0;
 }
 void Bird::update_position(sf::Time& delta_time) {
-	if (bird_sprite.getGlobalBounds().top < 570.5 && shouldfly) {
 		if (animation_counter == 5) {
 			bird_sprite.setTexture(textures[texture_switch]);
 			if (texture_switch)texture_switch = 0;
@@ -32,9 +31,13 @@ void Bird::update_position(sf::Time& delta_time) {
 		bird_sprite.move(0, velocity_y);
 		if (bird_sprite.getGlobalBounds().top < 0) {
 			bird_sprite.setPosition(100,0);
+			velocity_y = 0;
+		}
+		if (bird_sprite.getGlobalBounds().top > 570.5) {
+			bird_sprite.setPosition(100, 570.5);
+			velocity_y = 0;
 		}
 	}
-}
 float Bird::get_bound() {
 	return bird_sprite.getGlobalBounds().left + bird_sprite.getGlobalBounds().width;
 }

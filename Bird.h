@@ -13,6 +13,7 @@ private:
 public:
 	sf::Sprite bird_sprite;
 	Bird();
+	const sf::Sprite& get_sprite()const { return bird_sprite; }
 	void shouldfly(bool);
 	void flap(sf::Time& delta_time);
 	void reset_position();

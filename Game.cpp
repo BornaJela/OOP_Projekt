@@ -37,8 +37,9 @@ void Game::start_game() {
 			}
 			if (event.type == sf::Event::KeyPressed && run_game) {
 				if (event.key.code == sf::Keyboard::Space) {
-					is_space_pressed = true;
-					bird.shouldfly(true);
+					is_space_pressed = false;
+					bird.shouldfly(false);
+					bird.flap(delta_time);
 				}
 			}
 		}
@@ -53,7 +54,7 @@ void Game::draw_img() {
 	win.draw(background_sprite);
 	win.draw(ground_sprite_first);
 	win.draw(ground_sprite_second);
-	win.draw(bird.bird_sprite);
+	win.draw(bird.get_sprite());
 }
 void Game::move_ground(sf::Time& delta_time) {
 	//pod se pomjera ulijevo, zato -move_speed pomnozeno sa vremenom koje je proslo
