@@ -1,2 +1,5 @@
-﻿  Game.cpp
-  OOP_Projekt.vcxproj -> C:\Users\borna\source\repos\OOP_Projekt\x64\Debug\OOP_Projekt.exe
+﻿  Bird.cpp
+C:\Users\borna\source\repos\OOP_Projekt\Bird.cpp(23,51): warning C4551: function call missing argument list
+C:\Users\borna\source\repos\OOP_Projekt\Bird.cpp(23,51): error C3867: 'Bird::shouldfly': non-standard syntax; use '&' to create a pointer to member
+  main.cpp
+  Generating Code...

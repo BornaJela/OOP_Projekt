@@ -2,7 +2,7 @@
 #include "Globals.h"
 #include <iostream>
 //konstruktor za game
-Game::Game(sf::RenderWindow& window) : win(window){
+Game::Game(sf::RenderWindow& window) : win(window),is_space_pressed(false),run_game(true){
 	background_texture.loadFromFile("images and sounds for game/bg.png");
 	//postavljanje spritea na sliku, odnosno slika (background image) postaje sprite
 	background_sprite.setTexture(background_texture);
@@ -35,23 +35,30 @@ void Game::start_game() {
 			if (event.type == sf::Event::Closed) {
 				win.close();
 			}
+			if (event.type == sf::Event::KeyPressed && run_game) {
+				if (event.key.code == sf::Keyboard::Space) {
+					is_space_pressed = true;
+					bird.shouldfly(true);
+				}
+			}
 		}
-		std::cout << "Ground 1 height: " << ground_sprite_first.getGlobalBounds().height << std::endl;
-		std::cout << "Ground 1 top: " << ground_sprite_first.getGlobalBounds().top << std::endl;
 		move_ground(delta_time);
-		draw_background();
+		draw_img();
+		bird.update_position(delta_time);
 		//zaslon
 		win.display();
 	}
 }
-void Game::draw_background() {
+void Game::draw_img() {
 	win.draw(background_sprite);
 	win.draw(ground_sprite_first);
 	win.draw(ground_sprite_second);
+	win.draw(bird.bird_sprite);
 }
 void Game::move_ground(sf::Time& delta_time) {
 	//pod se pomjera ulijevo, zato -move_speed pomnozeno sa vremenom koje je proslo
 	//vece vrijeme=igra ide brze
+	//0 je y koordinata
 	ground_sprite_first.move(-move_speed * delta_time.asSeconds(), 0);
 	ground_sprite_second.move(-move_speed * delta_time.asSeconds(), 0);
 	//ako je prisa svoju duzinu, nova mu je odmah nakon sprite2
