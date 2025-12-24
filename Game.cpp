@@ -35,6 +35,7 @@ void Game::start_game() {
 			if (event.type == sf::Event::Closed) {
 				win.close();
 			}
+			//skace na space
 			if (event.type == sf::Event::KeyPressed && run_game) {
 				if (event.key.code == sf::Keyboard::Space) {
 					is_space_pressed = false;
