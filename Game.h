@@ -2,6 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include "Bird.h"
+#include "Pipe.h"
+#include <random>
+#include <vector>
 class Game
 {
 public:
@@ -20,5 +23,12 @@ private:
 	void move_ground(sf::Time& delta_time);
 	Bird bird;
 	bool is_space_pressed,run_game;
+	void Process(sf::Time& delta_time);
+	int pipe_counter, pipe_spawn_time;
+	void check_collision();
+	std::vector<Pipe> pipes;
+	std::random_device random;
+	//250 min, 550 je max
+	std::uniform_int_distribution<int> dist{ 250,550 };
 };
 
