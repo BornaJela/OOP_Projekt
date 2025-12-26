@@ -30,5 +30,6 @@ private:
 	std::random_device random;
 	//250 min, 550 je max
 	std::uniform_int_distribution<int> dist{ 250,550 };
+	void reset_game();
 };
 

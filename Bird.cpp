@@ -28,7 +28,7 @@ void Bird::update_position(sf::Time& delta_time) {
 		if (animation_counter == 5) {
 			bird_sprite.setTexture(textures[texture_switch]);
 			if (texture_switch)texture_switch = 0;
-			else texture_switch = 1;
+			else texture_switch = 1;	
 			animation_counter = 0;
 		}
 		animation_counter++;
@@ -42,8 +42,8 @@ void Bird::update_position(sf::Time& delta_time) {
 			velocity_y = 0;
 		}
 		//donja granica da ne ode ispod
-		if (bird_sprite.getGlobalBounds().top > 570.5) {
-			bird_sprite.setPosition(100, 570.5);
+		if (bird_sprite.getGlobalBounds().top > 580) {
+			bird_sprite.setPosition(100, 580);
 			velocity_y = 0;
 		}
 	}
