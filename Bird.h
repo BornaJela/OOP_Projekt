@@ -1,23 +1,22 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-
+#include<SFML/Graphics.hpp>
 class Bird
 {
 private:
+	//niz tekstura (2), 1 za pticu gore, jedan za odlje
 	sf::Texture textures[2];
-	const int flap_speed;
 	const int gravity;
+	const int flap_speed;
 	float velocity_y;
-	int animation_counter, texture_switch;
-	bool fly;
+	//anim counter i texture switch za mahanje krilima ptice kada ide gore i dolje
+	int anim_counter, texture_switch;
+	bool should_fly;
 public:
 	sf::Sprite bird_sprite;
 	Bird();
-	const sf::Sprite& get_sprite()const { return bird_sprite; }
-	void shouldfly(bool);
-	void flap(sf::Time& delta_time);
-	void reset_position();
-	void update_position(sf::Time& delta_time);
-	float get_bound();
+	void setShouldFly(bool);
+	void flapBird(sf::Time&);
+	void resetBirdPosition();
+	void update(sf::Time&);
+	float getRightBound(); // detektcija kolizije pomocu x koordinata
 };
-

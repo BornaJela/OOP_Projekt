@@ -1,130 +1,212 @@
 #include "Game.h"
-#include "Globals.h"
-#include "Pipe.h"
-#include <iostream>
-//konstruktor za game
-Game::Game(sf::RenderWindow& window) : win(window),is_space_pressed(false)
-,run_game(true),pipe_counter(71),pipe_spawn_time(70){
-	background_texture.loadFromFile("images and sounds for game/bg.png");
-	//postavljanje spritea na sliku, odnosno slika (background image) postaje sprite
-	background_sprite.setTexture(background_texture);
-	//scale-amo ga da se poravna sa slikom i koristimo predefinirani scale_factor
-	background_sprite.setScale(SCALE_FACTOR,SCALE_FACTOR);
-	background_sprite.setPosition(0, -100);
-
-	ground_texture.loadFromFile("images and sounds for game/ground.png");
-	ground_sprite_first.setTexture(ground_texture);
-	ground_sprite_second.setTexture(ground_texture);
-	ground_sprite_first.setScale(SCALE_FACTOR, SCALE_FACTOR);
-	ground_sprite_second.setScale(SCALE_FACTOR, SCALE_FACTOR);
-
-	//pozicija dobivena kao  -> visina ekrana - (visina poda * scale factor)
-	ground_sprite_first.setPosition(0, 600.5);
-	//na prvi sprite se drugi samo nastavlja dok god je potrebno (do kraja igre)
-	ground_sprite_second.setPosition(ground_sprite_first.getGlobalBounds().width,600.5);
-	Pipe::LoadTextures();
-}
-void Game::Process(sf::Time& delta_time)
+#include"Globals.h"
+#include<sstream>
+//inicijalizacija sa member list
+Game::Game(sf::RenderWindow& window) : win(window),
+is_enter_pressed(false),
+run_game(true),
+start_monitoring(false), // pracenje score-a
+pipe_counter(71), // brojac za spawnanje cijevi
+pipe_spawn_time(70), // kada pipe_counter dostigne ovaj spawn time, cijev se stvori
+score(0)
 {
-	if (is_space_pressed) {
-		//pomici zemlju
-		move_ground(delta_time);
-		//random generator za cijevi
-		if (pipe_counter > pipe_spawn_time) {
-			pipes.push_back(Pipe(dist(random)));
+	win.setFramerateLimit(60);
+	bg_texture.loadFromFile("assets/bg.png");
+	bg_sprite.setTexture(bg_texture);
+	bg_sprite.setScale(SCALE_FACTOR, SCALE_FACTOR);
+	bg_sprite.setPosition(0.f, -250.f);
+
+	ground_texture.loadFromFile("assets/ground.png");
+	ground_sprite1.setTexture(ground_texture);
+	ground_sprite2.setTexture(ground_texture);
+
+	ground_sprite1.setScale(SCALE_FACTOR, SCALE_FACTOR);
+	ground_sprite2.setScale(SCALE_FACTOR, SCALE_FACTOR);
+
+	ground_sprite1.setPosition(0, 578);
+	ground_sprite2.setPosition(ground_sprite1.getGlobalBounds().width, 578);
+
+	font.loadFromFile("assets/arial.ttf");
+	restart_text.setFont(font);
+	restart_text.setCharacterSize(48);
+	restart_text.setFillColor(sf::Color::Black);
+	restart_text.setPosition(150, 650);
+	restart_text.setString("Restart Game!!");
+
+	score_text.setFont(font);
+	score_text.setCharacterSize(24);
+	score_text.setFillColor(sf::Color::Black);
+	score_text.setPosition(15, 15);
+	score_text.setString("Score: 0");
+
+	Pipe::loadTextures();
+
+}
+
+void Game::doProcessing(sf::Time& dt)
+{
+	if (is_enter_pressed)
+	{
+		moveGround(dt);
+
+		if (pipe_counter > pipe_spawn_time)
+		{
+			pipes.push_back(Pipe(dist(rd)));
 			pipe_counter = 0;
 		}
 		pipe_counter++;
-		//azuriraj cijevi, odnosno izbr stare
-		for (int i = 0; i < pipes.size(); i++) {
-			pipes[i].update(delta_time);	
-			//ako prodje ekran da ga izbrise
-			if (pipes[i].getBound() < 0) {
+
+		for (int i = 0; i < pipes.size(); i++)
+		{
+			pipes[i].update(dt);
+			if (pipes[i].getRightBound() < 0)
+			{
 				pipes.erase(pipes.begin() + i);
 			}
 		}
-		check_collision();
-	}
-	bird.update_position(delta_time);
-}
-void Game::start_game() {
-	win.setFramerateLimit(60);
-	sf::Clock clock;
-	//pokrece se kod i otvara se prozor
-	while (win.isOpen()) {
-		sf::Event event;
-		sf::Time delta_time = clock.restart();
-		//ova ispod se vrti sve dok je prozor otvoren, odnosno dok ne ugasimo
-		while (win.pollEvent(event)) {
 
-			//ako je njegov tip "closed", zatvori prozor
-			if (event.type == sf::Event::Closed) {
+		checkCollisions();
+		checkScore();
+	}
+	bird.update(dt);
+}
+void Game::startGameLoop()
+{
+	sf::Clock clock;
+	//Game Loop
+	while (win.isOpen())
+	{
+		sf::Time dt = clock.restart();
+		sf::Event event;
+		//Event Loop
+		while (win.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+			{
 				win.close();
 			}
-			//pokretanje na space
-			if (event.type == sf::Event::KeyPressed && run_game) {
-				if (event.key.code == sf::Keyboard::Space && !is_space_pressed) {
-					if (run_game) {
-						is_space_pressed = true;
-						bird.shouldfly(true);
-					}
-					if (event.key.code == sf::Keyboard::Space && is_space_pressed) {
-						bird.flap(delta_time);
-					}
+			if (event.type == sf::Event::KeyPressed && run_game)
+			{
+				if (event.key.code == sf::Keyboard::Enter && !is_enter_pressed)
+				{
+					is_enter_pressed = true;
+					bird.setShouldFly(true);
+				}
+				if (event.key.code == sf::Keyboard::Space && is_enter_pressed)
+				{
+					bird.flapBird(dt);
 				}
 			}
+			if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left && !run_game)
+			{
+
+				if (restart_text.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
+				{
+					restartGame();
+				}
+
+			}
 		}
-		Process(delta_time);
-		draw_img();
-		//zaslon
+
+		doProcessing(dt);
+
+
+		draw();
+		//pokreni prozor
 		win.display();
 	}
 }
-void Game::check_collision() {
-	if (pipes.size() > 0) {
-		if (pipes[0].sprite_down.getGlobalBounds().intersects(bird.get_sprite().getGlobalBounds()) ||
-			pipes[0].sprite_up.getGlobalBounds().intersects(bird.get_sprite().getGlobalBounds()) ||
-			bird.get_sprite().getGlobalBounds().top >= 580) {
-			is_space_pressed = false;
+
+void Game::checkCollisions()
+{
+	// 3 nacina za game-over, ili je sudar s donjom ili s gornjom cijevi ili dodir sa tlom
+	if (pipes.size() > 0)
+	{
+		if (pipes[0].sprite_down.getGlobalBounds().intersects(bird.bird_sprite.getGlobalBounds()) ||
+			pipes[0].sprite_up.getGlobalBounds().intersects(bird.bird_sprite.getGlobalBounds()) ||
+			bird.bird_sprite.getGlobalBounds().top >= 540)
+		{
+			is_enter_pressed = false;
 			run_game = false;
 		}
 	}
 }
-void Game::draw_img() {
-	win.draw(background_sprite);
-	for (Pipe& p : pipes) {
-		win.draw(p.sprite_down);
-		win.draw(p.sprite_up);
-	}
-	win.draw(ground_sprite_first);
-	win.draw(ground_sprite_second);
-	win.draw(bird.get_sprite());
-}
-void Game::move_ground(sf::Time& delta_time) {
-	//pod se pomjera ulijevo, zato -move_speed pomnozeno sa vremenom koje je proslo
-	//vece vrijeme=igra ide brze
-	//0 je y koordinata
-	ground_sprite_first.move(-move_speed * delta_time.asSeconds(), 0);
-	ground_sprite_second.move(-move_speed * delta_time.asSeconds(), 0);
-	//ako je prisa svoju duzinu, nova mu je odmah nakon sprite2
-	if (ground_sprite_first.getGlobalBounds().left + ground_sprite_first.getGlobalBounds().width < 0) {
 
-		ground_sprite_first.setPosition(ground_sprite_second.getGlobalBounds().left + 
-			ground_sprite_second.getGlobalBounds().width,600.5);
-	}
-	if (ground_sprite_second.getGlobalBounds().left + ground_sprite_second.getGlobalBounds().width < 0) {
-
-		ground_sprite_second.setPosition(ground_sprite_first.getGlobalBounds().left +
-			ground_sprite_first.getGlobalBounds().width, 600.5);
+void Game::checkScore()
+{
+	if (pipes.size() > 0)
+	{
+		// pocinje tek kada prodje prvu cijev
+		if (!start_monitoring)
+		{
+			if (bird.bird_sprite.getGlobalBounds().left > pipes[0].sprite_down.getGlobalBounds().left &&
+				bird.getRightBound() < pipes[0].getRightBound())
+			{
+				start_monitoring = true;
+			}
+		}
+		//dok se uvjet iznad izvrsava, ptica je u cijevi, kada izadje, tek onda joj se score poveca
+		else
+		{
+			if (bird.bird_sprite.getGlobalBounds().left > pipes[0].getRightBound())
+			{
+				score++;
+				score_text.setString("Score: " + toString(score));
+				start_monitoring = false;
+			}
+		}
 	}
 }
-void Game::reset_game() {
-	bird.reset_position();
-	bird.shouldfly(false);
+void Game::draw()
+{
+	win.draw(bg_sprite);
+	for (Pipe& pipe : pipes)
+	{
+		win.draw(pipe.sprite_down);
+		win.draw(pipe.sprite_up);
+	}
+	win.draw(ground_sprite1);
+	win.draw(ground_sprite2);
+	win.draw(bird.bird_sprite);
+	win.draw(score_text);
+	if (!run_game)
+	{
+		win.draw(restart_text);
+	}
+}
+
+void Game::moveGround(sf::Time& dt)
+{
+	ground_sprite1.move(-move_speed * dt.asSeconds(), 0.f);
+	ground_sprite2.move(-move_speed * dt.asSeconds(), 0.f);
+
+	if (ground_sprite1.getGlobalBounds().left + ground_sprite1.getGlobalBounds().width < 0)
+	{
+		ground_sprite1.setPosition(ground_sprite2.getGlobalBounds().left + ground_sprite2.getGlobalBounds().width, 578);
+	}
+	if (ground_sprite2.getGlobalBounds().left + ground_sprite2.getGlobalBounds().width < 0)
+	{
+		ground_sprite2.setPosition(ground_sprite1.getGlobalBounds().left + ground_sprite1.getGlobalBounds().width, 578);
+	}
+
+}
+
+void Game::restartGame()
+{
+	bird.resetBirdPosition();
+	bird.setShouldFly(false);
 	run_game = true;
-	is_space_pressed = false;
+	is_enter_pressed = false;
 	pipe_counter = 71;
 	pipes.clear();
-	ground_sprite_first.setPosition(0, 600.5);
-	ground_sprite_second.setPosition(ground_sprite_first.getGlobalBounds().width,600.5);
+	score = 0;
+	score_text.setString("Score: 0");
+}
+
+std::string Game::toString(int num)
+{
+	//stringstreamanje za konverziju integera u string
+	std::stringstream ss;
+	ss << num;
+	return ss.str();
 }

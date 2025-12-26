@@ -1,35 +1,38 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include "Bird.h"
-#include "Pipe.h"
-#include <random>
-#include <vector>
+#include<SFML/Graphics.hpp>
+#include"Bird.h"
+#include<vector>
+#include"Pipe.h"
+#include<random>
 class Game
 {
 public:
-	//klasa game sa svojim konstruktorom
-	Game(sf::RenderWindow& window);
+	Game(sf::RenderWindow&);
 	sf::RenderWindow& win;
-	//funkcija za pokretanje igre
-	void start_game();
+	void startGameLoop();
 private:
-	//klasa texture za pozadinsku sliku
-	sf::Texture background_texture, ground_texture;
-	sf::Sprite background_sprite, ground_sprite_first, ground_sprite_second;
-	sf::Clock clock;
-	int move_speed = 200;
-	void draw_img();
-	void move_ground(sf::Time& delta_time);
+	//spriteovi i teksture za pticu i tlo
+	sf::Texture bg_texture, ground_texture;
+	sf::Sprite bg_sprite, ground_sprite1, ground_sprite2;
 	Bird bird;
-	bool is_space_pressed,run_game;
-	void Process(sf::Time& delta_time);
-	int pipe_counter, pipe_spawn_time;
-	void check_collision();
+	//igra se pokrece na enter
+	bool is_enter_pressed, run_game, start_monitoring;
+	const int move_speed = 270; //-> moguce promjeniti ako je brzina prevelika
+	void draw();
+	void moveGround(sf::Time&);
+	void doProcessing(sf::Time& dt);
+	void checkCollisions();
+	void restartGame();
+	void checkScore();
+	// broj pretvara u string, korisno za pratiti rezultat ptice
+	std::string toString(int);
+	int pipe_counter, pipe_spawn_time, score;
 	std::vector<Pipe> pipes;
-	std::random_device random;
-	//250 min, 550 je max
-	std::uniform_int_distribution<int> dist{ 250,550 };
-	void reset_game();
-};
+	//generator randoma
+	std::random_device rd;
+	// funkcija iz biblioteke koj generira random broj izmedju 2 navedena, koristimo za cijevi
+	std::uniform_int_distribution<int> dist{ 250,550 }; 
+	sf::Font font;
+	sf::Text restart_text, score_text;
 
+};

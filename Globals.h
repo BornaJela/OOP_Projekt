@@ -1,5 +1,4 @@
 #pragma once
-constexpr int WIN_WIDTH = 600;
-constexpr int WIN_HEIGHT=800;
-constexpr float SCALE_FACTOR=1.5f;
-//sirina i visina i scale faktor za resizanje
+//velicina ekrana i faktor skaliranja
+constexpr int WIN_WIDTH = 600, WIN_HEIGHT = 768;
+constexpr float SCALE_FACTOR = 1.5f;
