@@ -7,7 +7,8 @@ Pipe::Pipe(int y_pos)
 
 	sprite_down.setScale(SCALE_FACTOR, SCALE_FACTOR);
 	sprite_up.setScale(SCALE_FACTOR, SCALE_FACTOR);
-
+	//gornja cijev na y_pos, donja je gornja -razmak izmedju njih 2 - visina gornje (samo se gornja generira, donja
+	// se izracuna pomocu ovoga)
 	sprite_up.setPosition(WIN_WIDTH, y_pos);
 	sprite_down.setPosition(WIN_WIDTH, y_pos - pipe_distance - sprite_up.getGlobalBounds().height);
 }

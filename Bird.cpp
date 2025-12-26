@@ -56,7 +56,6 @@ void Bird::resetBirdPosition()
 	velocity_y = 0;
 }
 //obicna setter metoda za pokretanje ptice
-{
-void Bird::setShouldFly(bool should_fly)
+void Bird::setShouldFly(bool should_fly){
 	this->should_fly = should_fly;
 }

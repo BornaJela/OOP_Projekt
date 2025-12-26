@@ -18,7 +18,7 @@ private:
 	//igra se pokrece na enter
 	bool is_enter_pressed, run_game, start_monitoring;
 	const int move_speed = 270; //-> moguce promjeniti ako je brzina prevelika
-	void draw();
+	virtual void draw();
 	void moveGround(sf::Time&);
 	void doProcessing(sf::Time& dt);
 	void checkCollisions();

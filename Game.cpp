@@ -51,6 +51,7 @@ void Game::doProcessing(sf::Time& dt)
 
 		if (pipe_counter > pipe_spawn_time)
 		{
+			//generiranje random pozicija (brojeva)
 			pipes.push_back(Pipe(dist(rd)));
 			pipe_counter = 0;
 		}
@@ -59,6 +60,7 @@ void Game::doProcessing(sf::Time& dt)
 		for (int i = 0; i < pipes.size(); i++)
 		{
 			pipes[i].update(dt);
+			//ako je cijev izasla iz ekrana, izbrisi je
 			if (pipes[i].getRightBound() < 0)
 			{
 				pipes.erase(pipes.begin() + i);
@@ -81,25 +83,30 @@ void Game::startGameLoop()
 		//Event Loop
 		while (win.pollEvent(event))
 		{
+			//ako se klikne x, izadji
 			if (event.type == sf::Event::Closed)
 			{
 				win.close();
 			}
+			//koristi space samo dok run_game odnosno dok je igra upaljena
 			if (event.type == sf::Event::KeyPressed && run_game)
 			{
+				//enter pokrece igru ako igra vec nije pokrenuta
 				if (event.key.code == sf::Keyboard::Enter && !is_enter_pressed)
 				{
 					is_enter_pressed = true;
 					bird.setShouldFly(true);
 				}
+				//skace na space ako je aktivna igra
 				if (event.key.code == sf::Keyboard::Space && is_enter_pressed)
 				{
 					bird.flapBird(dt);
 				}
 			}
+			//kada igra zavrsi, pojavi se restart game koji mozemo aktivirati pritiskom misa
 			if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left && !run_game)
 			{
-
+				//klik unutar teksta
 				if (restart_text.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
 				{
 					restartGame();
@@ -139,6 +146,8 @@ void Game::checkScore()
 		// pocinje tek kada prodje prvu cijev
 		if (!start_monitoring)
 		{
+			//ako je lijeva strana ptice presla lijevu stranu cijevi,a desna strana
+			// ptice je manja od desne cijevi, znaci da je ptica izmedju cijevi
 			if (bird.bird_sprite.getGlobalBounds().left > pipes[0].sprite_down.getGlobalBounds().left &&
 				bird.getRightBound() < pipes[0].getRightBound())
 			{
@@ -179,7 +188,7 @@ void Game::moveGround(sf::Time& dt)
 {
 	ground_sprite1.move(-move_speed * dt.asSeconds(), 0.f);
 	ground_sprite2.move(-move_speed * dt.asSeconds(), 0.f);
-
+	//2 uvjeta za beskonacno dno, kada prvo zavrsi, ide iduce, a nakon iduceg ide opet prvo
 	if (ground_sprite1.getGlobalBounds().left + ground_sprite1.getGlobalBounds().width < 0)
 	{
 		ground_sprite1.setPosition(ground_sprite2.getGlobalBounds().left + ground_sprite2.getGlobalBounds().width, 578);

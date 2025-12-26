@@ -1,12 +1,14 @@
 ﻿  Game.cpp
-C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(102,87): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(102,87): warning C4244:         with
-C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(102,87): warning C4244:         [
-C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(102,87): warning C4244:             T=float
-C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(102,87): warning C4244:         ]
-C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(102,66): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(102,66): warning C4244:         with
-C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(102,66): warning C4244:         [
-C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(102,66): warning C4244:             T=float
-C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(102,66): warning C4244:         ]
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(110,87): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(110,87): warning C4244:         with
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(110,87): warning C4244:         [
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(110,87): warning C4244:             T=float
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(110,87): warning C4244:         ]
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(110,66): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(110,66): warning C4244:         with
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(110,66): warning C4244:         [
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(110,66): warning C4244:             T=float
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(110,66): warning C4244:         ]
+  main.cpp
+  Generating Code...
   OOP_Projekt.vcxproj -> C:\Users\borna\source\repos\OOP_Projekt\x64\Debug\OOP_Projekt.exe
