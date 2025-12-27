@@ -3,6 +3,7 @@
 #include"Bird.h"
 #include<vector>
 #include"Pipe.h"
+#include <fstream>
 #include<random>
 class Game
 {
@@ -11,6 +12,8 @@ public:
 	sf::RenderWindow& win;
 	void startGameLoop();
 private:
+	int high_score;
+	sf::Text high_score_text;
 	//spriteovi i teksture za pticu i tlo
 	sf::Texture bg_texture, ground_texture;
 	sf::Sprite bg_sprite, ground_sprite1, ground_sprite2;
@@ -34,5 +37,7 @@ private:
 	std::uniform_int_distribution<int> dist{ 250,550 }; 
 	sf::Font font;
 	sf::Text restart_text, score_text;
-
+	void loadHighScore();
+	void saveHighScore();
 };
+

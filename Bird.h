@@ -11,8 +11,11 @@ private:
 	//anim counter i texture switch za mahanje krilima ptice kada ide gore i dolje
 	int anim_counter, texture_switch;
 	bool should_fly;
-public:
 	sf::Sprite bird_sprite;
+public:
+	sf::Sprite get_sprite() {
+		return bird_sprite;
+	}
 	Bird();
 	void setShouldFly(bool);
 	void flapBird(sf::Time&);

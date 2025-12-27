@@ -1,14 +1,14 @@
 #include "Game.h"
 #include"Globals.h"
 #include<sstream>
-//inicijalizacija sa member list
+//inicijalizacija sa member list, win je clan game.h sa referencom na window
 Game::Game(sf::RenderWindow& window) : win(window),
 is_enter_pressed(false),
 run_game(true),
 start_monitoring(false), // pracenje score-a
 pipe_counter(71), // brojac za spawnanje cijevi
 pipe_spawn_time(70), // kada pipe_counter dostigne ovaj spawn time, cijev se stvori
-score(0)
+score(0), high_score(0)
 {
 	win.setFramerateLimit(60);
 	bg_texture.loadFromFile("assets/bg.png");
@@ -39,7 +39,14 @@ score(0)
 	score_text.setPosition(15, 15);
 	score_text.setString("Score: 0");
 
+	high_score_text.setFont(font);
+	high_score_text.setCharacterSize(24);
+	high_score_text.setFillColor(sf::Color::Red);
+	high_score_text.setPosition(400,15 );
+	high_score_text.setString("High score: 0");
+
 	Pipe::loadTextures();
+	Game::loadHighScore();
 
 }
 
@@ -129,9 +136,9 @@ void Game::checkCollisions()
 	// 3 nacina za game-over, ili je sudar s donjom ili s gornjom cijevi ili dodir sa tlom
 	if (pipes.size() > 0)
 	{
-		if (pipes[0].sprite_down.getGlobalBounds().intersects(bird.bird_sprite.getGlobalBounds()) ||
-			pipes[0].sprite_up.getGlobalBounds().intersects(bird.bird_sprite.getGlobalBounds()) ||
-			bird.bird_sprite.getGlobalBounds().top >= 540)
+		if (pipes[0].sprite_down.getGlobalBounds().intersects(bird.get_sprite().getGlobalBounds()) ||
+			pipes[0].sprite_up.getGlobalBounds().intersects(bird.get_sprite().getGlobalBounds()) ||
+			bird.get_sprite().getGlobalBounds().top >= 540)
 		{
 			is_enter_pressed = false;
 			run_game = false;
@@ -148,7 +155,7 @@ void Game::checkScore()
 		{
 			//ako je lijeva strana ptice presla lijevu stranu cijevi,a desna strana
 			// ptice je manja od desne cijevi, znaci da je ptica izmedju cijevi
-			if (bird.bird_sprite.getGlobalBounds().left > pipes[0].sprite_down.getGlobalBounds().left &&
+			if (bird.get_sprite().getGlobalBounds().left > pipes[0].sprite_down.getGlobalBounds().left &&
 				bird.getRightBound() < pipes[0].getRightBound())
 			{
 				start_monitoring = true;
@@ -157,10 +164,15 @@ void Game::checkScore()
 		//dok se uvjet iznad izvrsava, ptica je u cijevi, kada izadje, tek onda joj se score poveca
 		else
 		{
-			if (bird.bird_sprite.getGlobalBounds().left > pipes[0].getRightBound())
+			if (bird.get_sprite().getGlobalBounds().left > pipes[0].getRightBound())
 			{
 				score++;
 				score_text.setString("Score: " + toString(score));
+				if (score > high_score) {
+					high_score = score;
+					high_score_text.setString("High score: " + toString(high_score));
+					saveHighScore();
+				}
 				start_monitoring = false;
 			}
 		}
@@ -176,8 +188,9 @@ void Game::draw()
 	}
 	win.draw(ground_sprite1);
 	win.draw(ground_sprite2);
-	win.draw(bird.bird_sprite);
+	win.draw(bird.get_sprite());
 	win.draw(score_text);
+	win.draw(high_score_text);
 	if (!run_game)
 	{
 		win.draw(restart_text);
@@ -210,6 +223,7 @@ void Game::restartGame()
 	pipes.clear();
 	score = 0;
 	score_text.setString("Score: 0");
+
 }
 
 std::string Game::toString(int num)
@@ -218,4 +232,19 @@ std::string Game::toString(int num)
 	std::stringstream ss;
 	ss << num;
 	return ss.str();
+}
+void Game::loadHighScore() {
+	std::ifstream file("highscore.txt");
+	if (file.is_open()) {
+		file >> high_score;
+		file.close();
+		high_score_text.setString("High score: " + toString(high_score));
+	}
+}
+void Game::saveHighScore() {
+	std::ofstream file("highscore.txt");
+	if (file.is_open()) {
+		file << high_score;
+		file.close();
+	}
 }
