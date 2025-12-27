@@ -26,24 +26,24 @@ score(0), high_score(0)
 	ground_sprite1.setPosition(0, 578);
 	ground_sprite2.setPosition(ground_sprite1.getGlobalBounds().width, 578);
 
-	font.loadFromFile("assets/arial.ttf");
+	font.loadFromFile("assets/Flappy-Bird.ttf");
 	restart_text.setFont(font);
 	restart_text.setCharacterSize(48);
 	restart_text.setFillColor(sf::Color::Black);
-	restart_text.setPosition(150, 650);
-	restart_text.setString("Restart Game!!");
+	restart_text.setPosition(120, 650);
+	restart_text.setString("RESTART GAME!!");
 
 	score_text.setFont(font);
-	score_text.setCharacterSize(24);
-	score_text.setFillColor(sf::Color::Black);
-	score_text.setPosition(15, 15);
-	score_text.setString("Score: 0");
+	score_text.setCharacterSize(70);
+	score_text.setFillColor(sf::Color::White);
+	score_text.setPosition(270, 15);
+	score_text.setString("0");
 
 	high_score_text.setFont(font);
-	high_score_text.setCharacterSize(24);
-	high_score_text.setFillColor(sf::Color::Red);
-	high_score_text.setPosition(400,15 );
-	high_score_text.setString("High score: 0");
+	high_score_text.setCharacterSize(20);
+	high_score_text.setFillColor(sf::Color::Yellow);
+	high_score_text.setPosition(15,10 );
+	high_score_text.setString("HIGH SCORE: 0");
 
 	Pipe::loadTextures();
 	Game::loadHighScore();
@@ -167,7 +167,7 @@ void Game::checkScore()
 			if (bird.get_sprite().getGlobalBounds().left > pipes[0].getRightBound())
 			{
 				score++;
-				score_text.setString("Score: " + toString(score));
+				score_text.setString("" + toString(score));
 				if (score > high_score) {
 					high_score = score;
 					high_score_text.setString("High score: " + toString(high_score));
@@ -190,11 +190,23 @@ void Game::draw()
 	win.draw(ground_sprite2);
 	win.draw(bird.get_sprite());
 	win.draw(score_text);
+
+	sf::Text shadow = score_text;
+	shadow.setFillColor(sf::Color(0, 0, 0, 128));
+	shadow.setPosition(score_text.getPosition().x + 2, score_text.getPosition().y + 2);
+	win.draw(shadow);
+	win.draw(score_text);
+	sf::Text high_shadow = high_score_text;
+	high_shadow.setFillColor(sf::Color(0, 0, 0, 128));
+	high_shadow.setPosition(high_score_text.getPosition().x + 2, high_score_text.getPosition().y + 2);
+
+	win.draw(high_shadow);
 	win.draw(high_score_text);
 	if (!run_game)
 	{
 		win.draw(restart_text);
 	}
+
 }
 
 void Game::moveGround(sf::Time& dt)
@@ -222,7 +234,7 @@ void Game::restartGame()
 	pipe_counter = 71;
 	pipes.clear();
 	score = 0;
-	score_text.setString("Score: 0");
+	score_text.setString("0");
 
 }
 
