@@ -43,7 +43,7 @@ void Bird::flapBird(sf::Time& dt)
 	//ide -flap speed jer ide ulijevo, a ne udesno
 	velocity_y = -flap_speed * dt.asSeconds();
 }
-
+// desna koordinata ptice, biti ce korisno kasnije za usporedjivanje sa cijevi
 float Bird::getRightBound()
 {
 	return bird_sprite.getGlobalBounds().left + bird_sprite.getGlobalBounds().width;
@@ -58,4 +58,4 @@ void Bird::resetBirdPosition()
 //obicna setter metoda za pokretanje ptice
 void Bird::setShouldFly(bool should_fly){
 	this->should_fly = should_fly;
-}
+}	

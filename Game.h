@@ -5,6 +5,7 @@
 #include"Pipe.h"
 #include <fstream>
 #include<random>
+#include "Sound.h"
 class Game
 {
 public:
@@ -39,5 +40,6 @@ private:
 	sf::Text restart_text, score_text;
 	void loadHighScore();
 	void saveHighScore();
+	Sound sound;
 };
 

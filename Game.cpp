@@ -8,7 +8,7 @@ run_game(true),
 start_monitoring(false), // pracenje score-a
 pipe_counter(71), // brojac za spawnanje cijevi
 pipe_spawn_time(70), // kada pipe_counter dostigne ovaj spawn time, cijev se stvori
-score(0), high_score(0)
+score(0), high_score(0), sound()
 {
 	win.setFramerateLimit(60);
 	bg_texture.loadFromFile("assets/bg.png");
@@ -44,6 +44,7 @@ score(0), high_score(0)
 	high_score_text.setFillColor(sf::Color::Yellow);
 	high_score_text.setPosition(15,10 );
 	high_score_text.setString("HIGH SCORE: 0");
+
 
 	Pipe::loadTextures();
 	Game::loadHighScore();
@@ -107,6 +108,7 @@ void Game::startGameLoop()
 				//skace na space ako je aktivna igra
 				if (event.key.code == sf::Keyboard::Space && is_enter_pressed)
 				{
+					sound.playFlap();
 					bird.flapBird(dt);
 				}
 			}
@@ -142,6 +144,7 @@ void Game::checkCollisions()
 		{
 			is_enter_pressed = false;
 			run_game = false;
+			sound.playHit();
 		}
 	}
 }
@@ -166,6 +169,7 @@ void Game::checkScore()
 		{
 			if (bird.get_sprite().getGlobalBounds().left > pipes[0].getRightBound())
 			{
+				sound.playScore();
 				score++;
 				score_text.setString("" + toString(score));
 				if (score > high_score) {
@@ -190,7 +194,7 @@ void Game::draw()
 	win.draw(ground_sprite2);
 	win.draw(bird.get_sprite());
 	win.draw(score_text);
-
+	//da cijeli tekst dobijenu neku sjenu (da je sto slicniji font originalnom Flappy bird-u)
 	sf::Text shadow = score_text;
 	shadow.setFillColor(sf::Color(0, 0, 0, 128));
 	shadow.setPosition(score_text.getPosition().x + 2, score_text.getPosition().y + 2);
@@ -253,7 +257,7 @@ void Game::loadHighScore() {
 		high_score_text.setString("High score: " + toString(high_score));
 	}
 }
-void Game::saveHighScore() {
+void Game::saveHighScore(){
 	std::ofstream file("highscore.txt");
 	if (file.is_open()) {
 		file << high_score;

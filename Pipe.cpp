@@ -12,7 +12,7 @@ Pipe::Pipe(int y_pos)
 	sprite_up.setPosition(WIN_WIDTH, y_pos);
 	sprite_down.setPosition(WIN_WIDTH, y_pos - pipe_distance - sprite_up.getGlobalBounds().height);
 }
-
+//brzina pipeova, idu ulijevo i povecava se
 void Pipe::update(sf::Time& dt)
 {
 	sprite_up.move(-move_speed * dt.asSeconds(), 0.f);
@@ -25,7 +25,7 @@ void Pipe::loadTextures()
 	texture_down.loadFromFile("assets/pipedown.png");
 	texture_up.loadFromFile("assets/pipe.png");
 }
-
+//desna koordinata cijevi, da znamo kada povecati score
 float Pipe::getRightBound()
 {
 	return sprite_down.getGlobalBounds().left + sprite_down.getGlobalBounds().width;
