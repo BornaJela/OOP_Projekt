@@ -1,6 +1,6 @@
 #include "Sound.h"
 #include <iostream>
-Sound::Sound() :masterVolume(30.0f),flapVolume(21.0f),scoreVolume(21.0f),hitVolume(30.0f) {
+Sound::Sound() :masterVolume(30.0f),flapVolume(12.0f),scoreVolume(21.0f),hitVolume(30.0f) {
 	loadSound();
 }
 void Sound::loadSound() {
@@ -15,7 +15,7 @@ void Sound::loadSound() {
 //setter za zvuk, svaki ima razlicit
 void Sound::setMasterVolume(float vol) {
 	masterVolume = vol;
-	flapSound.setVolume(masterVolume * 0.7f);
+	flapSound.setVolume(masterVolume * 0.4f);
 	scoreSound.setVolume(masterVolume * 0.7f);
 	hitSound.setVolume(masterVolume * 1.0f);
 }

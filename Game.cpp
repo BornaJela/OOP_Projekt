@@ -6,7 +6,7 @@ Game::Game(sf::RenderWindow& window) : win(window),
 is_enter_pressed(false),
 run_game(true),
 start_monitoring(false), // pracenje score-a
-pipe_counter(71), // brojac za spawnanje cijevi
+pipe_counter(71), // brojac za spawnanje cijevi, 71 jer u originalnom se spawna svako 1.2s (70/60)
 pipe_spawn_time(70), // kada pipe_counter dostigne ovaj spawn time, cijev se stvori
 score(0), high_score(0), sound()
 {
