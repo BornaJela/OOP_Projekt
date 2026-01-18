@@ -1,5 +1,6 @@
 #include "Game.h"
 #include"Globals.h"
+#include <iostream>
 #include<sstream>
 //inicijalizacija sa member list, win je clan game.h sa referencom na window
 Game::Game(sf::RenderWindow& window) : win(window),
@@ -251,10 +252,18 @@ std::string Game::toString(int num)
 }
 void Game::loadHighScore() {
 	std::ifstream file("highscore.txt");
-	if (file.is_open()) {
-		file >> high_score;
-		file.close();
-		high_score_text.setString("High score: " + toString(high_score));
+	try {
+		if (!file) {
+			throw std::runtime_error("ne moze se otvoriti");
+		}
+			file >> high_score;
+			high_score_text.setString("High score: " + toString(high_score));
+			file.close();
+	}
+	catch (const std::exception& e) {
+		std::cerr << "pogreska->" << e.what();
+		high_score = 0;
+		high_score_text.setString("High score: 0");
 	}
 }
 void Game::saveHighScore(){

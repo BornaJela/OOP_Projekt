@@ -1,2 +1,12 @@
-﻿  Sound.cpp
+﻿  Game.cpp
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(120,87): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(120,87): warning C4244:         with
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(120,87): warning C4244:         [
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(120,87): warning C4244:             T=float
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(120,87): warning C4244:         ]
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(120,66): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(120,66): warning C4244:         with
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(120,66): warning C4244:         [
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(120,66): warning C4244:             T=float
+C:\Users\borna\source\repos\OOP_Projekt\Game.cpp(120,66): warning C4244:         ]
   OOP_Projekt.vcxproj -> C:\Users\borna\source\repos\OOP_Projekt\x64\Debug\OOP_Projekt.exe
