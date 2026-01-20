@@ -40,7 +40,7 @@ void Bird::update(sf::Time& dt)
 
 void Bird::flapBird(sf::Time& dt)
 {
-	//ide -flap speed jer ide ulijevo, a ne udesno
+	//ide -flap speed jer ide gore
 	velocity_y = -flap_speed * dt.asSeconds();
 }
 // desna koordinata ptice, biti ce korisno kasnije za usporedjivanje sa cijevi

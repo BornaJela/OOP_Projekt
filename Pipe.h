@@ -2,8 +2,8 @@
 #include<SFML/Graphics.hpp>
 class Obstacle {
 public:
-	virtual~Obstacle(){}
-	virtual float getRightBound() = 0;
+	virtual float getRightBound() const = 0;
+	virtual~Obstacle() {}
 };
 class Pipe:public Obstacle
 {
@@ -12,8 +12,7 @@ public:
 	sf::Sprite sprite_up, sprite_down;
 	static void loadTextures();
 	void update(sf::Time&);
-	float getRightBound() override;
-
+	float getRightBound()const override;
 private:
 	static sf::Texture texture_down, texture_up;
 	static int pipe_distance, move_speed;

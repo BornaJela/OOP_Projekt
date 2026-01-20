@@ -21,7 +21,7 @@ private:
 	Bird bird;
 	//igra se pokrece na enter
 	bool is_enter_pressed, run_game, start_monitoring;
-	const int move_speed = 270; //-> moguce promjeniti ako je brzina prevelika
+	int move_speed; //brzina cijevi
 	virtual void draw();
 	void moveGround(sf::Time&);
 	void doProcessing(sf::Time& dt);

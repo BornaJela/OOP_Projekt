@@ -26,10 +26,10 @@ void Pipe::loadTextures()
 	texture_up.loadFromFile("assets/pipe.png");
 }
 //desna koordinata cijevi, da znamo kada povecati score
-float Pipe::getRightBound()
+float Pipe::getRightBound()const
 {
 	return sprite_down.getGlobalBounds().left + sprite_down.getGlobalBounds().width;
 }
-//staticki clanovi koje koristimo samo u cpp, ucitava se samo jednom pri pozivu (stedi memoriju)
+//staticki clanovi koje koristimo samo u cpp
 sf::Texture Pipe::texture_down, Pipe::texture_up;
 int Pipe::pipe_distance = 170, Pipe::move_speed = 400;
