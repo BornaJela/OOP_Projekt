@@ -1,5 +1,7 @@
 #include "Game.h"
 #include"Globals.h"
+#include <fstream>
+#include <stdexcept>
 #include <iostream>
 #include<sstream>
 //inicijalizacija sa member list, win je clan game.h sa referencom na window
