@@ -3,7 +3,7 @@
 // konstruktor u kojemu mozemo mijenjati npr gravitaciju i brzinu mahanja
 Bird::Bird() :
 	gravity(10),
-	flap_speed(250),
+	flap_speed(300),
 	anim_counter(0),
 	texture_switch(1),
 	should_fly(false)
